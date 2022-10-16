@@ -1,0 +1,45 @@
+<resources>
+    <string name="app_name">Aplicación de Pulsos</string>
+    <string name="perfil">Perfil</string>
+    <string name="configuracion">Configuración</string>
+    <string name="selecthorario">Selección de Horario</string>
+    <string name="elecpulso">Elección de límite de pulso</string>
+    <string name="hora">Hora</string>
+    <string name="horareg1">Hora de registro de pulsos mínimo</string>
+    <string name="horareg2">Hora de registro de pulsos máximo</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="desde">Desde:</string>
+    <string name="selecci_n_de_horario">Selección de Horario</string>
+    <string name="hasta">Hasta:</string>
+    <string name="establecer_horario">Establecer Horario</string>
+    <string name="cantidad_de_registros">Cantidad de registros</string>
+    <string name="eleclimitepulso">Eleccion de Límite de Pulso</string>
+    <string name="dato1">Dato: Se enviara una notificación en caso de que se pase el número establecido</string>
+    <string name="minimo1">Mínimo</string>
+    <string name="maximo1">Máximo</string>
+    <string name="pulsoregis">Pulso que se registrará:</string>
+    <string name="pulsoregisant">Pulso anteriormente registrado:</string>
+    <string name="registrarpulso">Registrar Pulso</string>
+    <string name="ejpulso1">56</string>
+    <string name="ejpulso2">100</string>
+    <string name="title_activity_main2">MainActivity2</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+
+    <string name="hello_first_fragment">Hello first fragment</string>
+    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+    <string name="selectpeerfil">Seleccione Perfil</string>
+    <string name="nameuser">Nombre de Usuario</string>
+    <string name="createprofile">Crear perfil:</string>
+    <string name="crearperfil1">Crear</string>
+    <string name="activarnotis">Activar Notificaciones</string>
+    <string name="conectdispo">Conectar Dispositivo</string>
+    <string name="pulsopestaña">Pulso</string>
+    <string name="empezar_test">Empezar test</string>
+    <string name="todoo">TODO</string>
+
+</resources>
