@@ -22,8 +22,23 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.041" />
 
+    <TextView
+        android:id="@+id/textView9"
+        android:layout_width="133dp"
+        android:layout_height="38dp"
+        android:layout_marginTop="42dp"
+        android:layout_marginBottom="34dp"
+        android:text="@string/createprofile"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/etNombre"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.131"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/lvperfil"
+        app:layout_constraintVertical_bias="0.0" />
+
     <ListView
-        android:id="@+id/listview"
+        android:id="@+id/lvperfil"
         android:layout_width="364dp"
         android:layout_height="193dp"
         android:layout_marginStart="31dp"
@@ -36,7 +51,7 @@
         app:layout_constraintVertical_bias="0.121" />
 
     <EditText
-        android:id="@+id/editTextTextPersonName"
+        android:id="@+id/etNombre"
         android:layout_width="285dp"
         android:layout_height="62dp"
         android:autofillHints=""
@@ -50,35 +65,19 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.502"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/listview"
+        app:layout_constraintTop_toBottomOf="@+id/lvperfil"
         app:layout_constraintVertical_bias="0.28"
         tools:ignore="TouchTargetSizeCheck" />
 
-    <TextView
-        android:id="@+id/textView9"
-        android:layout_width="133dp"
-        android:layout_height="38dp"
-        android:layout_marginTop="42dp"
-        android:layout_marginBottom="34dp"
-        android:text="@string/createprofile"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toTopOf="@+id/editTextTextPersonName"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.131"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/listview"
-        app:layout_constraintVertical_bias="0.0" />
-
     <Button
-        android:id="@+id/button3"
+        android:id="@+id/btncrear"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:onClick="login"
         android:text="@string/crearperfil1"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName"
+        app:layout_constraintTop_toBottomOf="@+id/etNombre"
         app:layout_constraintVertical_bias="0.374" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

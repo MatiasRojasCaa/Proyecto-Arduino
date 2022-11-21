@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "18415408774",
+    "project_id": "appmovilpulso2",
+    "storage_bucket": "appmovilpulso2.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:18415408774:android:439e08025656b60e9f6307",
+        "android_client_info": {
+          "package_name": "com.example.aplicacindepulsos"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "18415408774-07tkod3i60di946hecv7hkda3h9mf5i9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA3nUiBtj2B4OqYQUSTKpdXHCm8iG_Jw-Y"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "18415408774-07tkod3i60di946hecv7hkda3h9mf5i9.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
