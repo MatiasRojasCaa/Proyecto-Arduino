@@ -1,18 +1,33 @@
 package com.example.aplicacindepulsos;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageButton;
 
-import com.google.android.material.tabs.TabLayout;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.UUID;
 
 
 public class MainActivity extends AppCompatActivity {
+    ImageButton gotest;
+    DatabaseReference dataref;
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu1,menu);
+        return true;
+    }
+
+
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
@@ -23,83 +38,36 @@ public class MainActivity extends AppCompatActivity {
         }else if (id == R.id.op2) {
             Intent i = new Intent(this, configuracion.class);
             startActivity(i);
+        }else if (id == R.id.op4) {
+        Intent i = new Intent(this, Pulsolimite.class);
+        startActivity(i);
+        }else if (id == R.id.op3) {
+            Intent i = new Intent(this, Pulsoautomatico.class);
+            startActivity(i);
         }
         return false;
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu1,menu);
-        return true;
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         Toolbar tb = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(tb);
+        gotest = (ImageButton) findViewById(R.id.gotest);
+        dataref = FirebaseDatabase.getInstance().getReference();
 
-        TabLayout tl = (TabLayout) findViewById(R.id.tablayout);
-        tl.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-            @Override
-            public void onTabSelected(TabLayout.Tab tab) {
-                int position = tab.getPosition();
-                switch (position) {
-                    case 0:
-                        pulso pulse = new pulso();
-                        getSupportFragmentManager().beginTransaction().replace(R.id.contenedor, pulse).commit();
-                        break;
-                    case 1:
-                        selecthorarioo sh = new selecthorarioo();
-                        getSupportFragmentManager().beginTransaction().replace(R.id.contenedor, sh).commit();
-                        break;
-                    case 2:
-                        elechorario eh = new elechorario();
-                        getSupportFragmentManager().beginTransaction().replace(R.id.contenedor, eh).commit();
-                        break;
-                }
-            }
 
+        gotest.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onTabUnselected(TabLayout.Tab tab) {
-                int position = tab.getPosition();
-                switch (position) {
-                    case 0:
-                        pulso pulse = new pulso();
-                        getSupportFragmentManager().beginTransaction().replace(R.id.contenedor, pulse).commit();
-                        break;
-                    case 1:
-                        selecthorarioo sh = new selecthorarioo();
-                        getSupportFragmentManager().beginTransaction().replace(R.id.contenedor, sh).commit();
-                        break;
-                    case 2:
-                        elechorario eh = new elechorario();
-                        getSupportFragmentManager().beginTransaction().replace(R.id.contenedor, eh).commit();
-                        break;
-                }
-            }
+            public void onClick(View v) {
 
-            @Override
-            public void onTabReselected(TabLayout.Tab tab) {
-                int position = tab.getPosition();
-                switch (position) {
-                    case 0:
-                        pulso pulse = new pulso();
-                        getSupportFragmentManager().beginTransaction().replace(R.id.contenedor, pulse).commit();
-                        break;
-                    case 1:
-                        selecthorarioo sh = new selecthorarioo();
-                        getSupportFragmentManager().beginTransaction().replace(R.id.contenedor, sh).commit();
-                        break;
-                    case 2:
-                        elechorario eh = new elechorario();
-                        getSupportFragmentManager().beginTransaction().replace(R.id.contenedor, eh).commit();
-                        break;
-                }
-            }
-        });
+                String key = UUID.randomUUID().toString();
+                dataref.child("Pulsotest").child(key).child("Pulso Mínimo").setValue("40");
+                dataref.child("Pulsotest").child(key).child("Pulso Máximo").setValue("100");
+            }});
+
+        }
 
     }
-}

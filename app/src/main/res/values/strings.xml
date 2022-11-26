@@ -41,5 +41,7 @@
     <string name="pulsopestaña">Pulso</string>
     <string name="empezar_test">Empezar test</string>
     <string name="todoo">TODO</string>
+    <string name="pulso_automatico">Pulso Automatico</string>
+    <string name="pulso_limite">Pulso Limite</string>
 
 </resources>

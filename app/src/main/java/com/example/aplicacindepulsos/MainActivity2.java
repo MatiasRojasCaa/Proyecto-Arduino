@@ -11,7 +11,6 @@ import android.widget.ListView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.navigation.ui.AppBarConfiguration;
 
 import com.example.aplicacindepulsos.Modelos.Perfil;
 import com.google.firebase.database.DataSnapshot;
@@ -25,13 +24,10 @@ import java.util.ArrayList;
 import java.util.UUID;
 
 public class MainActivity2 extends AppCompatActivity {
-    private AppBarConfiguration appBarConfiguration;
     FirebaseDatabase database;
-
+    ListView lvperfil;
     ArrayList<Perfil> perfiles;
     ArrayAdapter<Perfil> adaptadorPerfil;
-
-    ListView lvperfil;
     Button btncrear;
     EditText etNombre;
 
@@ -43,57 +39,55 @@ public class MainActivity2 extends AppCompatActivity {
         lvperfil = (ListView) findViewById(R.id.lvperfil);
         btncrear = (Button) findViewById(R.id.btncrear);
         btncrear.setOnClickListener(v -> insertar());
-        cargarBd();
+        perfiles = new ArrayList<Perfil>();
+        cargarBD();
     }
 
 
     public void insertar() {
         String nombre = etNombre.getText().toString();
         String key = UUID.randomUUID().toString();
-        Perfil a = new Perfil(key, nombre);
+        Perfil a = new Perfil(nombre);
 
         database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference("Perfil").child(key);
-        myRef.setValue(a);
+        DatabaseReference myRef = database.getReference("Perfil");
+        myRef.child(key).setValue(a);
     }
-    private void cargarBd() {
+
+    private void cargarBD() {
         database = FirebaseDatabase.getInstance();
         DatabaseReference perfilRef = database.getReference("Perfil");
         ValueEventListener perfilListener = new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                try {
-                    for (DataSnapshot d : snapshot.getChildren()) {
-                        String nombre = d.child("nombre").getValue().toString();
-                        Perfil a = new Perfil(nombre);
-                        perfiles.add(a);
-                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
+                for (DataSnapshot d : snapshot.getChildren()) {
+                    perfiles.clear();
+                    String nombre = d.child("nombre").getValue().toString();
+                    Perfil a = new Perfil(nombre);
+                    perfiles.add(a);
+
+                    adaptadorPerfil = new ArrayAdapter<Perfil>(getApplicationContext(), android.R.layout.simple_list_item_1, perfiles);
+                    lvperfil.setAdapter(adaptadorPerfil);
+                    lvperfil.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+
+                            Perfil a = (Perfil) adapterView.getItemAtPosition(i);
+                            Intent intencion = new Intent(getApplicationContext(),MainActivity.class);
+                            Gson gson = new Gson();
+                            String perfil = gson.toJson(a);
+                            intencion.putExtra("perfil",perfil);
+                            startActivity(intencion);
+                        }
+                    });
+                }}
+
+                @Override
+                public void onCancelled (@NonNull DatabaseError error){
+                    System.out.println("error");
                 }
-                adaptadorPerfil = new ArrayAdapter<Perfil>(getApplicationContext(), android.R.layout.simple_list_item_1, perfiles);
-                lvperfil.setAdapter(adaptadorPerfil);
-                lvperfil.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-
-                        Perfil a = (Perfil) adapterView.getItemAtPosition(i);
-                        Intent intencion = new Intent(getApplicationContext(),MainActivity.class);
-                        Gson gson = new Gson();
-                        String perfil = gson.toJson(a);
-                        intencion.putExtra("perfil",perfil);
-
-                        startActivity(intencion);
-                    }
-                });
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                System.out.println("error");
-            }
-        };
+            };
         perfilRef.addValueEventListener(perfilListener);
-    }
+        }
 }
+

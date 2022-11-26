@@ -1,67 +1,83 @@
 package com.example.aplicacindepulsos;
 
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.Menu;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-import android.content.Intent;
-import android.view.MenuItem;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
-import android.os.Bundle;
-import android.view.Menu;
-
+import com.example.aplicacindepulsos.Modelos.pulsotest;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 
 public class Calendario extends AppCompatActivity {
-
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        int id = item.getItemId();
-        if (id == R.id.op1) {
-            Intent i = new Intent(this, Calendario.class);
-            startActivity(i);
-        }else if (id == R.id.op2) {
-            Intent i = new Intent(this, configuracion.class);
-            startActivity(i);
-        }
-        return false;
-    }
+    ArrayList<pulsotest> pulsotests;
+    ArrayAdapter<pulsotest> adaptadorpulso;
+    FirebaseDatabase database;
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu1,menu);
         return true;
     }
-    ListView listView;
+    ListView lvperfil;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_calendario);
-
-        listView=(ListView) findViewById(R.id.lvperfil);
-
-        ArrayList<String> arrayList=new ArrayList();
-
-        arrayList.add("Pulso Minimo 67" + "  /  " + "Pulso Maximo 86");
-        arrayList.add("Pulso Minimo 68" + "  /  " + "Pulso Maximo 87");
-        arrayList.add("Pulso Minimo 69" + "  /  " + "Pulso Maximo 88");
-        arrayList.add("Pulso Minimo 70" + "  /  " + "Pulso Maximo 89");
-        arrayList.add("Pulso Minimo 71" + "  /  " + "Pulso Maximo 90");
-        arrayList.add("Pulso Minimo 72" + "  /  " + "Pulso Maximo 91");
-        arrayList.add("Pulso Minimo 73" + "  /  " + "Pulso Maximo 92");
-        arrayList.add("Pulso Minimo 74" + "  /  " + "Pulso Maximo 93");
-        arrayList.add("Pulso Minimo 75" + "  /  " + "Pulso Maximo 94");
-        arrayList.add("Pulso Minimo 76" + "  /  " + "Pulso Maximo 95");
-
-        ArrayAdapter arrayAdapter=new ArrayAdapter(this, android.R.layout.simple_list_item_1,arrayList);
-
-        listView.setAdapter(arrayAdapter);
-
+        lvperfil = (ListView) findViewById(R.id.lvperfil);
         Toolbar tb = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(tb);
-
+        pulsotests = new ArrayList<pulsotest>();
+        cargarBD();
 
     }
+    private void cargarBD() {
+        database = FirebaseDatabase.getInstance();
+        DatabaseReference pulsoRef = database.getReference("Pulsotest");
+        ValueEventListener pulsoListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot d : snapshot.getChildren()) {
+                    String pulmin = d.child("Pulso Mínimo").getValue().toString();
+                    String pulmax = d.child("Pulso Máximo").getValue().toString();
+                    pulsotest a = new pulsotest(pulmin, pulmax);
+                    pulsotests.add(a);
+
+                    adaptadorpulso = new ArrayAdapter<pulsotest>(getApplicationContext(), android.R.layout.simple_list_item_1, pulsotests);
+                    lvperfil.setAdapter(adaptadorpulso);
+                    lvperfil.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+
+                            pulsotest a = (pulsotest) adapterView.getItemAtPosition(i);
+                            Intent intencion = new Intent(getApplicationContext(),MainActivity.class);
+                            Gson gson = new Gson();
+                            String pulsotest = gson.toJson(a);
+                            intencion.putExtra("pulsotest",pulsotest);
+                            startActivity(intencion);
+                        }
+                    });
+                }}
+
+            @Override
+            public void onCancelled (@NonNull DatabaseError error){
+                System.out.println("error");
+            }
+        };
+        pulsoRef.addValueEventListener(pulsoListener);
+    }
+
 }
